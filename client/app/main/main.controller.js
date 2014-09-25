@@ -30,27 +30,3 @@ angular.module('eblaAppApp')
     //   socket.unsyncUpdates('thing');
     // });
   });
-
-  //
-  //   $http.get('/api/things').success(function(awesomeThings) {
-  //     $scope.awesomeThings = awesomeThings;
-  //   });
-  //
-  //   $scope.addThing = function() {
-  //     if($scope.newThing === '') {
-  //       return;
-  //     }
-  //       var thing = {
-  //           title: $scope.newThing.title,
-  //           info: $scope.newThing.info,
-  //           active: true,
-  //           user: $scope.currentUser._id
-  //       };
-  //     $http.post('/api/things',thing);
-  //     $scope.newThing = '';
-  //   };
-  //
-  //   $scope.deleteThing = function(thing) {
-  //     $http.delete('/api/things/' + thing._id);
-  //   };
-  // });
