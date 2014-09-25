@@ -14,7 +14,10 @@ angular.module('eblaAppApp')
       if($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { info: $scope.newThing });
+      $http.post('/api/things', {
+        user: $scope.currentUser._id,
+        info: $scope.newThing
+        });
       $scope.newThing = '';
     };
 

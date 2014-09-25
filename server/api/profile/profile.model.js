@@ -3,22 +3,19 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-// var User = require('../user/user.model');
-
 var ProfileSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  user: { type: Schema.ObjectId, ref: 'User' },
+  firstName: String,
+  lastName: String,
   trade: String,
-  info: String,
-  available: Boolean,
-  city: String,
-  state: String,
+  location: {
+    city: String,
+    state: String
+  },
+  about: String,
+  tradeStat: Boolean,
+  friends: [],
   active: Boolean
 });
 
-ProfileSchema
-  .statics.load = function(id, cb) {
-  this.findOne({
-    _id: id
-  }).populate('user', 'name email').exec(cb);
-};
 module.exports = mongoose.model('Profile', ProfileSchema);

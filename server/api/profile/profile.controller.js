@@ -6,11 +6,13 @@ var Profile = require('./profile.model');
 
 // Get list of profiles
 exports.index = function(req, res) {
-  Profile.find(function (err, profiles) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, profiles);
+  Profile.find().populate('User', 'user').exec(function (err, profiles) {
+      if(err) { return handleError(res, err); }
+      console.log(profiles);
+      return res.status(200).json(profiles);
   });
 };
+
 
 
 // Get a single profile
