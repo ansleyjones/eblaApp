@@ -16,7 +16,7 @@ angular.module('eblaAppApp')
         })
         .then( function() {
           // Account created, redirect to home
-          $location.path('/');
+          $location.path('/profileform');
         })
         .catch( function(err) {
           err = err.data;

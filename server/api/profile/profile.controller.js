@@ -6,7 +6,11 @@ var Profile = require('./profile.model');
 
 // Get list of profiles
 exports.index = function(req, res) {
-  Profile.find().populate('User', 'user').exec(function (err, profiles) {
+  Profile.find()
+    .populate('user', 'name email')
+    .populate('items')
+    .populate('messageBoard')
+    .exec(function (err, profiles) {
       if(err) { return handleError(res, err); }
       console.log(profiles);
       return res.status(200).json(profiles);
@@ -18,6 +22,16 @@ exports.index = function(req, res) {
 // Get a single profile
 exports.show = function(req, res) {
   Profile.findById(req.params.id, function (err, profile) {
+    if(err) { return handleError(res, err); }
+    if(!profile) { return res.send(404); }
+    return res.json(profile);
+  });
+};
+
+// Get my profile
+exports.showMe = function(req, res) {
+  var userId = req.user._id;
+  Profile.findOne({'user._id': 'userId'}, function (err, profile) {
     if(err) { return handleError(res, err); }
     if(!profile) { return res.send(404); }
     return res.json(profile);
