@@ -7,7 +7,7 @@ var Profile = require('./profile.model');
 // Get list of profiles
 exports.index = function(req, res) {
   Profile.find()
-    .populate('user', 'name email')
+    .populate('user')
     .populate('items')
     .populate('messageBoard')
     .exec(function (err, profiles) {
@@ -29,9 +29,9 @@ exports.show = function(req, res) {
 };
 
 // Get my profile
-exports.showMe = function(req, res) {
+exports.me = function(req, res) {
   var userId = req.user._id;
-  Profile.findOne({'user._id': 'userId'}, function (err, profile) {
+  Profile.findOne({'user._id': userId}, function (err, profile) {
     if(err) { return handleError(res, err); }
     if(!profile) { return res.send(404); }
     return res.json(profile);

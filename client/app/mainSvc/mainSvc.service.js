@@ -37,11 +37,11 @@ angular.module('eblaAppApp')
         image: profile.image,
         trade: profile.trade,
         location: {
-          city: profile.city,
-          state: profile.state
+          city: profile.location.city,
+          state: profile.location.state
         },
         about: profile.about,
-        tradeStat: false,
+        tradeStat: profile.tradeStat,
         friends:[],
         active: true
       }

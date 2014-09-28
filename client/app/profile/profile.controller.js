@@ -5,13 +5,11 @@ angular.module('eblaAppApp')
 
     $scope.currentUser = Auth.getCurrentUser();
 
-    profileSvc.get().success(function(profile){
-      $scope.myProfile = profile;
-    });
+    $scope.myProfile = profileSvc.getMe();
 
-    $scope.editProfile = function(id){
-      profileSvc.put(id)
-    }
+    $scope.editProfile = function(profile){
+      profileSvc.changeProfile(profile);
+    };
 
     $scope.addProfile = function(profile){
       mainSvc.addProfile(profile);

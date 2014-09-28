@@ -13,10 +13,10 @@ angular.module('eblaAppApp')
           id:'me'
         }
       },
-      get: {
+      getMe: {
         method: 'GET',
         params: {
-          id:'me'
+          id: 'me'
         }
       }
     });

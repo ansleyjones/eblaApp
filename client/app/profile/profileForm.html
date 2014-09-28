@@ -63,15 +63,15 @@ This profile view will show the new user's profile form
 
   <br><br>
 
-  <label for="aboutMe">About Me: </label><textarea name="textarea" rows="10" cols="50"></textarea>
+  <label for="aboutMe">About Me: </label><textarea name="textarea" rows="10" cols="50" ng-model="newProfile.about"></textarea>
   <h3>Trade Status</h3>
   <p>By indicating that you are available for artist trade you are allowing other users to ping and message you.</p>
-  <input ng-model="newProfile.tradeStat" ng-value="true" type="radio">
+  Available <input ng-model="newProfile.tradeStat" ng-true-value="true" ng-false-value="false" type="checkbox"><br>
 
   <br><br>
 
   <h3>Work Examples</h3>
-
+  <br><br>
   <button>SUBMIT</button>
 </form>
 </div>
