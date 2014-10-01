@@ -6,9 +6,9 @@ var Message = require('./message.model');
 // Get list of messages
 exports.index = function(req, res) {
   Message.find()
-    .populate('sender','name email')
-    .populate('recipient', 'name email')
-    .populate('me')
+    .populate('sender')
+    .populate('recipient')
+    .populate('item')
     .exec(function (err, messages) {
     if(err) { return handleError(res, err); }
     return res.json(200, messages);

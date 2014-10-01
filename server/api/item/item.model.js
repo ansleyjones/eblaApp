@@ -4,10 +4,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var ItemSchema = new Schema({
-  user: { type: Schema.ObjectId, ref: 'User' },
+  profile: { type: Schema.ObjectId, ref: 'Profile' },
   title: String,
   price: Number,
   image: String,
+  tradeStat: Boolean,
   active: Boolean
 });
 

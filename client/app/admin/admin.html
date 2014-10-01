@@ -9,4 +9,20 @@
         <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
     </li>
   </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="profile in profiles">
+        <strong>{{profile.firstName}}</strong><br>
+        <span class="text-muted">{{profile.lastName}}</span>
+        <a ng-click="deleteProfile(profile._id)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+    </li>
+  </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="item in items">
+        <strong>{{item.title}}</strong><br>
+        <span class="text-muted">{{item.price}}</span>
+        <a ng-click="deleteItem(item._id)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+    </li>
+  </ul>
 </div>

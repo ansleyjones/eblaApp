@@ -1,5 +1,15 @@
-<div class="col-md-12">
-This profile view will show the user's completed profile
+<div ng-include="'components/navbar/navbar.html'"></div>
 
+<div class="col-md-12">
+<h1>{{singleProfile.firstName}} {{singleProfile.lastName}}</h1>
+<h2>{{singleProfile.location.city}}, {{singleProfile.location.state}}</h2>
+<h3>About {{singleProfile.firstName}}</h3>
+<p>{{singleProfile.about}}</p>
+<div ng-repeat="item in userItems">
+  <h3><a href="">{{item.title}}</a></h3>
+  <p>${{item.price}}</p>
+  <p ng-show="{{item.tradeStat}}">AVAILABLE</p>
+  <div ng-show="{{item.tradeStat}}"><a href="" ng-click="addPing(newPing)" ng-model="newPing.item"><p>TAG</p></a></div>
+</div>
 
 </div>

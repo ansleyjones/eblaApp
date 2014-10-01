@@ -7,12 +7,9 @@ var Profile = require('./profile.model');
 // Get list of profiles
 exports.index = function(req, res) {
   Profile.find()
-    .populate('user')
-    .populate('items')
-    .populate('messageBoard')
+    .populate('user', 'name email')
     .exec(function (err, profiles) {
       if(err) { return handleError(res, err); }
-      console.log(profiles);
       return res.status(200).json(profiles);
   });
 };
@@ -21,7 +18,11 @@ exports.index = function(req, res) {
 
 // Get a single profile
 exports.show = function(req, res) {
+  var paramId = req.params.id;
+  console.log(paramId);
   Profile.findById(req.params.id, function (err, profile) {
+
+    console.log(req.params.id);
     if(err) { return handleError(res, err); }
     if(!profile) { return res.send(404); }
     return res.json(profile);
@@ -29,9 +30,12 @@ exports.show = function(req, res) {
 };
 
 // Get my profile
-exports.me = function(req, res) {
+exports.showme = function(req, res) {
+  console.log("hello");
   var userId = req.user._id;
+  console.log(userId);
   Profile.findOne({'user._id': userId}, function (err, profile) {
+    console.log(profile);
     if(err) { return handleError(res, err); }
     if(!profile) { return res.send(404); }
     return res.json(profile);
@@ -48,15 +52,12 @@ exports.create = function(req, res) {
 
 // Updates an existing profile in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Profile.findById(req.params.id, function (err, profile) {
-    if (err) { return handleError(res, err); }
-    if(!profile) { return res.send(404); }
-    var updated = _.merge(profile, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, profile);
-    });
+  var profId = req.body._id;
+  req.body.user = req.body.user._id;
+  delete req.body._id;
+  Profile.update({_id:profId}, req.body, function(err, profile){
+    if(err) {return handleError(res, err); }
+    res.status(200).json(profile);
   });
 };
 

@@ -5,7 +5,7 @@ var Item = require('./item.model');
 
 // Get list of items
 exports.index = function(req, res) {
-  Item.find().populate('user', 'name email').exec(function (err, items) {
+  Item.find().populate('profile').exec(function (err, items) {
     if(err) { return handleError(res, err); }
     return res.json(200, items);
   });

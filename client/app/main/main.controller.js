@@ -1,9 +1,22 @@
 'use strict';
 
 angular.module('eblaAppApp')
-  .controller('MainCtrl', function ($scope, $http, socket, Auth) {
+  .controller('MainCtrl', function ($scope, $http, $routeParams, socket, Auth, mainSvc) {
     $scope.awesomeThings = [];
     $scope.currentUser = Auth.getCurrentUser();
+
+    mainSvc.getProfiles().success(function(profiles){
+      $scope.profiles = profiles;
+    });
+
+    mainSvc.getSingleProfile($routeParams.idx).success(function(profile){
+      console.log(profile);
+      $scope.singleProfile = profile;
+    });
+
+    mainSvc.getItems().success(function(items){
+      $scope.items = items;
+    });
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
@@ -29,4 +42,6 @@ angular.module('eblaAppApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
+
+
   });

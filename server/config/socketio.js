@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/ping/ping.socket').register(socket);
   require('../api/item/item.socket').register(socket);
   require('../api/message/message.socket').register(socket);
   require('../api/profile/profile.socket').register(socket);

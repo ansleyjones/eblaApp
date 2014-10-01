@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('eblaAppApp')
-  .factory('mainSvc', function ($http, $log, $rootScope, $route, Auth, profileSvc) {
+  .factory('mainSvc', function ($http, $log, $rootScope, $route, Auth, User) {
 
     var currentUser = Auth.getCurrentUser();
+    var myUser = User.get();
 
 // USER METHODS
     var usersUrl = "/api/users";
@@ -17,7 +18,6 @@ angular.module('eblaAppApp')
     };
 
 // PROFILE METHODS
-    // var currentProfile = profileSvc.get();
 
     var profilesUrl = "/api/profiles";
 
@@ -40,8 +40,8 @@ angular.module('eblaAppApp')
           city: profile.location.city,
           state: profile.location.state
         },
+        messages: [],
         about: profile.about,
-        tradeStat: profile.tradeStat,
         friends:[],
         active: true
       }
@@ -50,27 +50,45 @@ angular.module('eblaAppApp')
       });
     };
 
-    var editProfile = function(id){
-
+    var editProfile = function(profile){
+      $http.put(profilesUrl + "/" + profile._id, profile).then(function(response){
+        $rootScope.$broadcast("product:updated");
+      })
     };
 
     var deleteProfile = function(id){
-
+      $http.delete(profilesUrl + "/" + id).then(function(response){
+        $rootScope.$broadcast("product:deleted");
+      })
     };
+
 
 // MESSAGE METHODS
-    var messagesUrl = "/api/messages";
+    var pingsUrl = "/api/pings";
 
-    var getMessages = function(){
-      return $http.get(messagesUrl);
+    var getPings = function(){
+      return $http.get(pingsUrl);
     };
 
-    var getSingleMessage = function(id){
-      return $http.get(messagesUrl + "/" + id);
+    var getSinglePing = function(id){
+      return $http.get(pingsUrl + "/" + id);
     };
 
-    var deleteMessage = function(id){
+    var editPing = function(ping){
+      $http.put(pingsUrl + "/" + ping._id, ping).then(function(response){
+        $rootScope.$broadcast("ping:updated");
+      });
+    };
+    var addPing = function(ping){
+      $http.post(pingsUrl, ping).then(function(response){
+        $rootScope.$broadcast("new ping:added");
+      });
+    };
 
+    var deletePing = function(id){
+      $http.delete(pingsUrl + "/" + id).then(function(response){
+        $rootScope.$broadcast("ping:deleted")
+      })
     };
 
 // ITEM METHODS
@@ -84,19 +102,47 @@ angular.module('eblaAppApp')
       return $http.get(itemsUrl + "/" + id);
     };
 
+    var addItem = function(item){
+      $http.post(itemsUrl, item).then(function(response){
+        $rootScope.$broadcast("new item:added");
+      });
+    };
+
+    var editItem = function(item){
+      $http.put(itemsUrl + "/" + item._id, item).then(function(response){
+        $rootScope.$broadcast("item:updated");
+      });
+    };
+
+
+    var deleteItem = function(id){
+      $http.delete(itemsUrl + "/" + id).then(function(response){
+        $rootScope.$broadcast("item:deleted");
+      });
+    }
+
     return{
       getUsers: getUsers,
       getSingleUser: getSingleUser,
+
       getProfiles: getProfiles,
       getSingleProfile: getSingleProfile,
       addProfile: addProfile,
       editProfile: editProfile,
       deleteProfile: deleteProfile,
-      getMessages: getMessages,
-      getSingleMessage: getSingleMessage,
-      deleteMessage: deleteMessage,
+
+      getPings: getPings,
+      getSinglePing: getSinglePing,
+      addPing: addPing,
+      editPing: editPing,
+      deletePing: deletePing,
+
       getItems: getItems,
-      getSingleItem: getSingleItem
+      getSingleItem: getSingleItem,
+      addItem: addItem,
+      editItem: editItem,
+      deleteItem: deleteItem
+
     }
 
   });

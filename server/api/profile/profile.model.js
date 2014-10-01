@@ -14,9 +14,8 @@ var ProfileSchema = new Schema({
     state: String
   },
   about: String,
-  tradeStat: String,
-  items: [{ type: Schema.ObjectId, ref: 'Item'}],
-  messageBoard: [{ type: Schema.ObjectId, ref: 'Message' }],
+  avgValue: Number,
+  messageBoard: [],
   friends: [],
   active: Boolean
 });

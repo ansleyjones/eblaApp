@@ -3,7 +3,7 @@
 angular.module('eblaAppApp')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/profile', {
+      .when('/profile/:idx', {
         templateUrl: 'app/profile/profile.html',
         controller: 'ProfileCtrl'
       })
@@ -11,7 +11,7 @@ angular.module('eblaAppApp')
         templateUrl: 'app/profile/profileForm.html',
         controller: 'ProfileCtrl'
       })
-      .when('/profile/me', {
+      .when('/profile', {
         templateUrl: 'app/profile/myProfile.html',
         controller: 'ProfileCtrl'
       });
