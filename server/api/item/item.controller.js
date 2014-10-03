@@ -29,18 +29,30 @@ exports.create = function(req, res) {
 };
 
 // Updates an existing item in the DB.
+// exports.update = function(req, res) {
+//   if(req.body._id) { delete req.body._id; }
+//   Item.findById(req.params.id, function (err, item) {
+//     if (err) { return handleError(res, err); }
+//     if(!item) { return res.send(404); }
+//     var updated = _.merge(item, req.body);
+//     updated.save(function (err) {
+//       if (err) { return handleError(res, err); }
+//       return res.json(200, item);
+//     });
+//   });
+// };
+
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Item.findById(req.params.id, function (err, item) {
-    if (err) { return handleError(res, err); }
-    if(!item) { return res.send(404); }
-    var updated = _.merge(item, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, item);
-    });
+  var itemId = req.body._id;
+  req.body.profile = req.body.profile._id;
+  delete req.body._id;
+  Profile.update({_id:itemId}, req.body, function(err, profile){
+    if(err) {return handleError(res, err); }
+    res.status(200).json(profile);
   });
 };
+
+
 
 // Deletes a item from the DB.
 exports.destroy = function(req, res) {

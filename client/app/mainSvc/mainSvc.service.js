@@ -30,22 +30,22 @@ angular.module('eblaAppApp')
     };
 
     var addProfile = function(profile){
-      var newProfile = {
-        user: currentUser._id,
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        image: profile.image,
-        trade: profile.trade,
-        location: {
-          city: profile.location.city,
-          state: profile.location.state
-        },
-        messages: [],
-        about: profile.about,
-        friends:[],
-        active: true
-      }
-      $http.post(profilesUrl, newProfile).then(function(response){
+      // var newProfile = {
+      //   user: currentUser._id,
+      //   firstName: profile.firstName,
+      //   lastName: profile.lastName,
+      //   image: profile.image,
+      //   trade: [],
+      //   location: {
+      //     city: profile.location.city,
+      //     state: profile.location.state
+      //   },
+      //   messages: [],
+      //   about: profile.about,
+      //   friends:[],
+      //   active: true
+      // }
+      $http.post(profilesUrl, profile).then(function(response){
         $rootScope.$broadcast("profile:added");
       });
     };

@@ -1,14 +1,32 @@
 'use strict';
 
 angular.module('eblaAppApp')
-  .controller('ProfileCtrl', function ($scope, $location, $routeParams, socket, Auth, mainSvc) {
+  .controller('ProfileCtrl', function ($scope, _, $location, $routeParams, socket, Auth, mainSvc) {
 
     $scope.currentUser = Auth.getCurrentUser();
 
+    $scope.trades = [
+      'Painting/Drawing',
+      'Printmaking',
+      'Photography',
+      'Metalwork',
+      'Jewelry',
+      'Textiles',
+      'Woodwork',
+      'Graphics'
+    ];
 
     mainSvc.getSingleProfile($routeParams.idx).success(function(profile){
       $scope.singleProfile = profile;
+      mainSvc.getItems().success(function(items){
+        $scope.items = items;
+        $scope.userItems = _.filter(items, function(item){
+          return $scope.singleProfile._id === item.profile._id;
+        })
+        socket.syncUpdates('item', $scope.userItems);
+
     });
+  });
 
 
     mainSvc.getProfiles().success(function(profiles){
@@ -22,46 +40,43 @@ angular.module('eblaAppApp')
 
     mainSvc.getItems().success(function(items){
       $scope.items = items;
-      $scope.myItems = [];
-      for (var i = 0; i < $scope.items.length; i++) {
-        if ($scope.currentUser._id === $scope.items[i].profile.user) {
-          $scope.myItems.push($scope.items[i]);
-        }
-      };
+
+      $scope.myItems = _.filter(items, function(item){
+        return $scope.currentUser._id === item.profile.user;
+      });
+
       socket.syncUpdates('item', $scope.myItems);
+      socket.syncUpdates('item', $scope.userItems);
+      socket.syncUpdates('item', $scope.items);
       return $scope.myItems;
     });
 
-    mainSvc.getItems().success(function(items){
-      $scope.items = items;
-      $scope.userItems = [];
-      for (var i = 0; i < $scope.items.length; i++) {
-        if ($scope.singleProfile._id === $scope.items[i].profile._id) {
-          $scope.userItems.push($scope.items[i]);
-        }
-      };
-      return $scope.userItems;
-    });
-
-
     mainSvc.getPings().success(function(pings){
       $scope.pings = pings;
-      $scope.myPings = [];
-      $scope.unreadPings = [];
-      for (var i = 0; i < $scope.pings.length; i++) {
-        if ($scope.currentUser._id === $scope.pings[i].recipient.user) {
-          $scope.myPings.push($scope.pings[i]);
-          if ($scope.pings[i].read === false) {
-            $scope.unreadPings.push($scope.pings[i]);
-            console.log($scope.unreadPings);
-            socket.syncUpdates('ping', $scope.unreadPings);
+      $scope.matches = [];
+      $scope.pinged = _.filter(pings, function(ping){
+        return ping.sender.user === $scope.currentUser._id;
+      });
+      $scope.myPings = _.filter(pings, function(ping){
+        return ping.recipient.user === $scope.currentUser._id;
+      });
+      $scope.unreadPings = _.filter($scope.myPings, function(ping){
+        return ping.read === false;
+      });
+
+      for (var i = 0; i < $scope.myPings.length; i++) {
+        for (var j = 0; j < $scope.pinged.length; j++) {
+          if ($scope.myPings.sender === $scope.pinged.recipient) {
+            $scope.matches.push($scope.myPings[i]);
           }
         }
-      };
+      }
+      return $scope.matches;
+
+      socket.syncUpdates('ping', $scope.matches);
+      socket.syncUpdates('ping', $scope.pinged);
       socket.syncUpdates('ping', $scope.myPings);
       socket.syncUpdates('ping', $scope.pings);
-
-      return [$scope.myPings, $scope.unreadPings];
     });
 
     $scope.editProfile = function(profile){
@@ -69,9 +84,34 @@ angular.module('eblaAppApp')
     };
 
     $scope.addProfile = function(profile){
-      mainSvc.addProfile(profile);
+      mainSvc.addProfile({
+        user: $scope.currentUser._id,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        image: profile.image,
+        trade: $scope.myTrades,
+        location: {
+          city: profile.location.city,
+          state: profile.location.state
+        },
+        messages: [],
+        about: profile.about,
+        friends:[],
+        active: true
+      });
       $location.path("/");
     };
+    $scope.myTrades = [];
+    $scope.addTrade = function(trade){
+
+      $scope.myTrades.push(trade);
+      console.log($scope.myTrades);
+    };
+    //
+    // $scope.submitTrades = function () {
+    //   mainSvc.editProfile($scope.Profile);
+    // }
+
 
     $scope.addItem = function(item){
       mainSvc.addItem({
@@ -82,6 +122,8 @@ angular.module('eblaAppApp')
         tradeStat: item.tradeStat,
         active: true
       });
+      socket.syncUpdates('item', $scope.items);
+      $scope.item = {};
     };
 
     $scope.addPing = function(ping, item){
@@ -92,6 +134,7 @@ angular.module('eblaAppApp')
         date: new Date(),
         read: false
       }
+
       mainSvc.addPing(newPing);
     };
 

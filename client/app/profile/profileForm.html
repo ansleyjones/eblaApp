@@ -60,17 +60,13 @@ This profile view will show the new user's profile form
     <option value="WI">Wisconsin</option>
     <option value="WY">Wyoming</option>
   </select>
-
   <br><br>
-
   <label for="aboutMe">About Me: </label><textarea name="textarea" rows="10" cols="50" ng-model="newProfile.about"></textarea>
-
   <br><br>
-
-
-
-  <button>SUBMIT</button>
-
+  <label ng-repeat="trade in trades">
+    <input type="checkbox" checklist-model="trade" checklist-value="{{trade}}" ng-value="{{trade}}" ng-click="addTrade(trade)"> {{trade}}
+  </label>
+  <button type="submit">SUBMIT</button>
 </form>
 
 </div>

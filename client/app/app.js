@@ -6,7 +6,8 @@ angular.module('eblaAppApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'lodash'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -54,3 +55,8 @@ angular.module('eblaAppApp', [
       });
     });
   });
+
+  angular.module('lodash', [])
+    .factory('_', function(){
+      return window._;
+    });

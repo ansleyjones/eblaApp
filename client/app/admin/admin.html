@@ -25,4 +25,12 @@
         <a ng-click="deleteItem(item._id)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
     </li>
   </ul>
+
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="ping in pings">
+        <strong>{{ping.sender.firstName}}</strong><br>
+        <span class="text-muted">{{ping.sender.lastName}}</span>
+        <a ng-click="deletePing(ping._id)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+    </li>
+  </ul>
 </div>

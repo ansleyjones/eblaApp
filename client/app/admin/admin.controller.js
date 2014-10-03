@@ -13,12 +13,22 @@ angular.module('eblaAppApp')
     mainSvc.getItems().success(function(items){
       $scope.items = items;
     });
+
+    mainSvc.getPings().success(function(pings){
+      $scope.pings = pings;
+    });
+
+
     $scope.deleteProfile = function(id){
       mainSvc.deleteProfile(id);
     };
 
     $scope.deleteItem = function(id){
       mainSvc.deleteItem(id);
+    };
+
+    $scope.deletePing = function(id){
+      mainSvc.deletePing(id);
     };
 
     $scope.delete = function(user) {

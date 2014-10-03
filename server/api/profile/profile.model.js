@@ -8,7 +8,7 @@ var ProfileSchema = new Schema({
   firstName: String,
   lastName: String,
   image: String,
-  trade: String,
+  trade: [],
   location: {
     city: String,
     state: String

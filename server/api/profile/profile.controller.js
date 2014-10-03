@@ -29,18 +29,6 @@ exports.show = function(req, res) {
   });
 };
 
-// Get my profile
-exports.showme = function(req, res) {
-  console.log("hello");
-  var userId = req.user._id;
-  console.log(userId);
-  Profile.findOne({'user._id': userId}, function (err, profile) {
-    console.log(profile);
-    if(err) { return handleError(res, err); }
-    if(!profile) { return res.send(404); }
-    return res.json(profile);
-  });
-};
 
 // Creates a new profile in the DB.
 exports.create = function(req, res) {

@@ -1,10 +1,14 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
+<div ng-include="'font.html'"></div>
+
 <div class="col-md-6">
   <h1>{{myProfile.firstName}} {{myProfile.lastName}}</h1>
   <h2>{{myProfile.location.city}}, {{myProfile.location.state}}</h2>
   <h3>About Me</h3>
     <p>{{myProfile.about}}</p>
-
+    <section ng-repeat="trade in myProfile.trade">
+      <p>{{trade}}</p>
+    </section>
   <a href="" ng-click="revealPings=!revealPings"><i class="fa fa-bookmark" ng-if="unreadPings.length>0" style="font-size: 30px;"></i><i class="fa fa-bookmark-o" ng-if="unreadPings.length === 0" style="font-size: 30px;"></i></a><span> ({{unreadPings.length}})</span>
     <div class="myPings" ng-repeat="ping in myPings"  ng-show="revealPings">
       <ul>
@@ -16,26 +20,28 @@
       </ul>
     </div>
 
-    <div class="matches">
-
+  <a href="" ng-click="revealMatch=!revealMatch"><i class="fa fa-exchange" style="font-size: 30px;"></i></a><span> ({{matches.length}})</span>
+    <div class="matches" ng-repeat="match in matches track by $index" ng-show="revealMatch">
+      <li><a href="/profile/{{match.recipient.user}}">Tag match with {{match.sender.firstName}} {{match.sender.lastName}}</li>
     </div>
 
-  <h3>Add Work</h3>
-    <a href="" ng-click="itemForm=!itemForm"><i class="fa fa-plus-square-o" style="font-size:50px;"></i></a>
-    <form ng-show="itemForm" class="itemForm" ng-submit="addItem(newItem)">
-      <label for="title">Title: </label><input type="text" ng-model="newItem.title"><br>
-      <label for="price">Price: $</label><input type="Number" ng-model="newItem.price"><br>
-      <label for="image">Image Url: </label><input type="text" ng-model="newItem.image">
-      <br><br>
-      <label for="tradeStat">Item available for artist trade? </label><input type="checkbox" ng-value="true" ng-model="newItem.tradeStat">
-      <button type="submit">SUBMIT</button>
-    </form>
-</div>
-<div class="col-md-6">
-<h2>My Work</h2>
-<div ng-repeat="item in myItems">
-  <h3><a>{{item.title}}</a></h3>
-  <p>${{item.price}}</p>
 
 </div>
+<div class="col-md-6">
+  <h2>My Work</h2>
+    <div ng-repeat="item in myItems">
+      <h3><a>{{item.title}}</a></h3>
+      <p>${{item.price}}</p>
+    </div>
+
+
+  <a href="" ng-click="itemForm=!itemForm"><i class="fa fa-plus-square-o" style="font-size:50px;"></i></a>
+  <form ng-show="itemForm" class="itemForm" ng-submit="addItem(newItem)">
+    <label for="title">Title: </label><input type="text" ng-model="newItem.title"><br>
+    <label for="price">Price: $</label><input type="Number" ng-model="newItem.price"><br>
+    <label for="image">Image Url: </label><input type="text" ng-model="newItem.image">
+    <br><br>
+    <label for="tradeStat">Item available for artist trade? </label><input type="checkbox" ng-value="true" ng-model="newItem.tradeStat">
+    <button type="submit">SUBMIT</button>
+  </form>
 </div>
