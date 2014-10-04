@@ -1,25 +1,26 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div ng-include="'font.html'"></div>
-
+<div class="container">
+<div class="row">
 <div class="col-md-3">
-    <div class="myPings" ng-repeat="ping in matches">
+    <div class="myPings" ng-repeat="ping in matches track by $index">
       <ul>
         <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
         <li>{{ping.date | date:'MMM dd, y'}}</li>
         <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
-        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li></li>
+        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li>
         <br>
       </ul>
     </div>
 </div>
 
 <div class="col-md-3">
-    <div class="pinged" ng-repeat="ping in pinged">
+    <div class="pinged" ng-repeat="ping in matchesPinged track by $index">
       <ul>
         <li>You tagged {{ping.recipient.firstName}}'s <a href="/profile/{{ping.recipient._id}}">{{ping.item.title}}</a></li>
         <li>{{ping.date | date:'MMM dd, y'}}</li>
         <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
-        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li></li>
+        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li>
         <br>
       </ul>
     </div>
@@ -27,7 +28,23 @@
 
 <div class="col-md-6">
   <div class="matchOpts" ng-repeat="ping in tradeOpts">
-    <p>{{ping}}</p>
-    <a href="" ng-click="removeTradeOpt(ping)">Remove</a>
+    <section class="col-md-3">
+      heeyyy
+      <div ng-if="ping.sender.user==currentUser._id">
+        {{ping.sender.firstName}}
+        <a href="" ng-click="removeTradeOpt(ping)">Remove</a>
+      </div>
+    </section>
+    <section class="col-md-3">
+      hello
+      <div ng-if="ping.sender.user!=currentUser._id">
+        {{ping.sender.firstName}}
+        <a href="" ng-click="removeTradeOpt(ping)">Remove</a>
+      </div>
+    </section>
   </div>
+    <p ng-if="tradeOpts.length===2">{{tradeStats()}}</p>
+    <p ng-if="tradeOpts.length===2">{{stats}}</p>
+</div>
+</div>
 </div>

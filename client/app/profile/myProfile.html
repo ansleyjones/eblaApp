@@ -19,7 +19,16 @@
         <br>
       </ul>
     </div>
-
+  <a href="" ng-click="revealPinged=!revealPinged"><i class="fa fa-star" ng-if="unreadPings.length>0" style="font-size: 30px;"></i><i class="fa fa-bookmark-o" ng-if="unreadPings.length === 0" style="font-size: 30px;"></i></a><span> ({{unreadPings.length}})</span>
+    <div class="myPings" ng-repeat="ping in pinged"  ng-show="revealPinged">
+      <ul>
+        <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
+        <li>{{ping.date | date:'MMM dd, y'}}</li>
+        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
+        <li><a href="" ng-click="deletePing(ping._id)">DELETE</a></li></li>
+        <br>
+      </ul>
+    </div>
   <a href="/{{myProfile._id}}/match" ng-click="revealMatch=!revealMatch"><i class="fa fa-exchange" style="font-size: 30px;"></i></a><span> ({{matches.length}})</span>
     <div class="matches" ng-repeat="match in matches track by $index" ng-show="revealMatch">
       <li><a href="/profile/{{match.recipient.user}}">Tag match with {{match.sender.firstName}} {{match.sender.lastName}}</li>

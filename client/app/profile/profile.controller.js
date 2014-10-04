@@ -53,7 +53,7 @@ angular.module('eblaAppApp')
 
     mainSvc.getPings().success(function(pings){
       $scope.pings = pings;
-      $scope.matches = [];
+      $scope.matches=[];
       $scope.pinged = _.filter(pings, function(ping){
         return ping.sender.user === $scope.currentUser._id;
       });
@@ -64,14 +64,19 @@ angular.module('eblaAppApp')
         return ping.read === false;
       });
 
-      for (var i = 0; i < $scope.myPings.length; i++) {
-        for (var j = 0; j < $scope.pinged.length; j++) {
-          if ($scope.myPings.sender === $scope.pinged.recipient) {
-            $scope.matches.push($scope.myPings[i]);
+      for (var i = 0; i < $scope.pinged.length; i++) {
+        for (var j = 0; j < $scope.myPings.length; j++) {
+          if ($scope.pinged[i].recipient._id === $scope.myPings[j].sender._id) {
+            $scope.matches.push($scope.myPings[j]);
           }
         }
       }
+      $scope.matches = _.uniq($scope.matches);
+
+      console.log("matches");
+      console.log($scope.matches);
       return $scope.matches;
+
 
       socket.syncUpdates('ping', $scope.matches);
       socket.syncUpdates('ping', $scope.pinged);

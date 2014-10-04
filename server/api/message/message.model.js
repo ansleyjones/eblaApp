@@ -4,11 +4,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var MessageSchema = new Schema({
-  sender: { type: Schema.ObjectId, ref: 'Profile' },
-  recipient: { type: Schema.ObjectId, ref: 'Profile' },
-  item: { type: Schema.ObjectId, ref: 'Item' },
+  sender: { type: Schema.ObjectId, ref: 'Ping' },
+  recipient: { type: Schema.ObjectId, ref: 'Ping' },
   subject: String,
-  content: String,
+  message: String,
   read: Boolean,
   active: Boolean
 });

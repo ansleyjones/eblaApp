@@ -8,7 +8,6 @@ exports.index = function(req, res) {
   Message.find()
     .populate('sender')
     .populate('recipient')
-    .populate('item')
     .exec(function (err, messages) {
     if(err) { return handleError(res, err); }
     return res.json(200, messages);

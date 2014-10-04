@@ -7,6 +7,7 @@ var ItemSchema = new Schema({
   profile: { type: Schema.ObjectId, ref: 'Profile' },
   title: String,
   price: Number,
+  likes: Number,
   image: String,
   tradeStat: Boolean,
   active: Boolean
