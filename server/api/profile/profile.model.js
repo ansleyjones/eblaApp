@@ -14,9 +14,6 @@ var ProfileSchema = new Schema({
     state: String
   },
   about: String,
-  avgValue: Number,
-  messageBoard: [],
-  friends: [],
   active: Boolean
 });
 

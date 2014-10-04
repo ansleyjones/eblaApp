@@ -20,7 +20,7 @@
       </ul>
     </div>
 
-  <a href="" ng-click="revealMatch=!revealMatch"><i class="fa fa-exchange" style="font-size: 30px;"></i></a><span> ({{matches.length}})</span>
+  <a href="/{{myProfile._id}}/match" ng-click="revealMatch=!revealMatch"><i class="fa fa-exchange" style="font-size: 30px;"></i></a><span> ({{matches.length}})</span>
     <div class="matches" ng-repeat="match in matches track by $index" ng-show="revealMatch">
       <li><a href="/profile/{{match.recipient.user}}">Tag match with {{match.sender.firstName}} {{match.sender.lastName}}</li>
     </div>

@@ -94,13 +94,12 @@ angular.module('eblaAppApp')
           city: profile.location.city,
           state: profile.location.state
         },
-        messages: [],
         about: profile.about,
-        friends:[],
         active: true
       });
       $location.path("/");
     };
+
     $scope.myTrades = [];
     $scope.addTrade = function(trade){
 
@@ -123,7 +122,7 @@ angular.module('eblaAppApp')
         active: true
       });
       socket.syncUpdates('item', $scope.items);
-      $scope.item = {};
+      $scope.newItem = {};
     };
 
     $scope.addPing = function(ping, item){

@@ -1,0 +1,33 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div ng-include="'font.html'"></div>
+
+<div class="col-md-3">
+    <div class="myPings" ng-repeat="ping in matches">
+      <ul>
+        <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
+        <li>{{ping.date | date:'MMM dd, y'}}</li>
+        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
+        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li></li>
+        <br>
+      </ul>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="pinged" ng-repeat="ping in pinged">
+      <ul>
+        <li>You tagged {{ping.recipient.firstName}}'s <a href="/profile/{{ping.recipient._id}}">{{ping.item.title}}</a></li>
+        <li>{{ping.date | date:'MMM dd, y'}}</li>
+        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
+        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li></li>
+        <br>
+      </ul>
+    </div>
+</div>
+
+<div class="col-md-6">
+  <div class="matchOpts" ng-repeat="ping in tradeOpts">
+    <p>{{ping}}</p>
+    <a href="" ng-click="removeTradeOpt(ping)">Remove</a>
+  </div>
+</div>
