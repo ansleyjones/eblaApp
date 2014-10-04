@@ -2,17 +2,6 @@
 <div ng-include="'font.html'"></div>
 <div class="container">
 <div class="row">
-<div class="col-md-3">
-    <div class="myPings" ng-repeat="ping in matches track by $index">
-      <ul>
-        <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
-        <li>{{ping.date | date:'MMM dd, y'}}</li>
-        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
-        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li>
-        <br>
-      </ul>
-    </div>
-</div>
 
 <div class="col-md-3">
     <div class="pinged" ng-repeat="ping in matchesPinged track by $index">
@@ -26,17 +15,15 @@
     </div>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-6 matcher">
   <div class="matchOpts" ng-repeat="ping in tradeOpts">
-    <section class="col-md-3">
-      heeyyy
+    <section class="col-md-3 firstMatch">
       <div ng-if="ping.sender.user==currentUser._id">
         {{ping.sender.firstName}}
         <a href="" ng-click="removeTradeOpt(ping)">Remove</a>
       </div>
     </section>
-    <section class="col-md-3">
-      hello
+    <section class="col-md-3 secondMatch">
       <div ng-if="ping.sender.user!=currentUser._id">
         {{ping.sender.firstName}}
         <a href="" ng-click="removeTradeOpt(ping)">Remove</a>
@@ -46,5 +33,20 @@
     <p ng-if="tradeOpts.length===2">{{tradeStats()}}</p>
     <p ng-if="tradeOpts.length===2">{{stats}}</p>
 </div>
+
+<div class="col-md-3">
+    <div class="myPings" ng-repeat="ping in matches track by $index">
+      <ul>
+        <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
+        <li>{{ping.date | date:'MMM dd, y'}}</li>
+        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
+        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li>
+        <br>
+      </ul>
+    </div>
+</div>
+
+
+
 </div>
 </div>

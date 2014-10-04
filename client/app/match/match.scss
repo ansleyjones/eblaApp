@@ -1,0 +1,24 @@
+.matcher{
+  border: 1px solid red;
+  height: 500px;
+  .firstMatch{
+    width: 200px;
+    padding: 0px;
+    float: left;
+    vertical-align: top;
+  }
+  .secondMatch{
+    width: 200px;
+    padding: 0px;
+    float: right;
+    vertical-align: top;
+  }
+}
+
+.pinged{
+  ul{
+    li{
+      list-style-type: none;
+    }
+  }
+}
