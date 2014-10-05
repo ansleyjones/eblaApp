@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var MessageSchema = new Schema({
-  sender: { type: Schema.ObjectId, ref: 'Ping' },
-  recipient: { type: Schema.ObjectId, ref: 'Ping' },
+  user: { type: Schema.ObjectId, ref: 'User' },
+  pingItems: [],
   subject: String,
   message: String,
   read: Boolean,

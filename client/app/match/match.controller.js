@@ -129,4 +129,16 @@ angular.module('eblaAppApp')
         console.log($scope.stats);
 
     };
+
+    $scope.addMessage = function(newMessage){
+      matchSvc.addMessage({
+        user: $scope.currentUser._id,
+        pingItems: $scope.tradeOpts,
+        subject: newMessage.subject,
+        message: newMessage.message,
+        read: false,
+        active: true
+      });
+
+    }
   });

@@ -31,9 +31,18 @@
       </div>
     </section>
   </div>
-  <div class="stats">
-    <p ng-if="tradeOpts.length===2">{{tradeStats()}}</p>
-    <p ng-if="tradeOpts.length===2">{{stats}}</p>
+  <div class="stats" ng-if="tradeOpts.length===2">
+    <p>{{tradeStats()}}</p>
+    <h3>Trade Stats</h3> <br>
+    <p ng-if="stats<0" class="statloss">Net Loss: ${{stats}}</p>
+    <p ng-if="stats>=0" class="statgain">Net Gain: ${{stats}}</p>
+    <br>
+    <a href="" ng-click="createReq=!createReq">CREATE TRADE REQUEST</a>
+      <form action="" ng-show="createReq" ng-submit="addMessage(newMessage)">
+        <input type="text" placeholder="Subject" ng-model="newMessage.subject">
+        <input type="textarea" placeholder="Message" ng-model="newMessage.message">
+        <button type="submit">SEND REQUEST</button>
+      </form>
   </div>
 </div>
 

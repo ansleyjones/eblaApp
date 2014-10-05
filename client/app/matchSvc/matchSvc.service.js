@@ -43,6 +43,29 @@ angular.module('eblaAppApp')
       return $http.get(pingsUrl + "/" + id);
     };
 
+    var messagesUrl = "/api/messages";
+
+    var getMessages = function(){
+      return $http.get(messagesUrl);
+    };
+
+    var getSingleMessage = function(id){
+      return $http.get(messagesUrl + "/" + id);
+    };
+
+    var addMessage = function(message){
+      $http.post(messagesUrl, message).then(function(response){
+        $rootScope.$broadcast("new message:added");
+      });
+    };
+
+    var editMessage = function(message){
+      $http.put(messagesUrl + "/" + message._id, message).then(function(response){
+        $rootScope.$broadcast("message:updated");
+      });
+    };
+
+
     return{
       getUsers: getUsers,
       getSingleUser: getSingleUser,
@@ -51,6 +74,10 @@ angular.module('eblaAppApp')
       getItems: getItems,
       getSingleItem: getSingleItem,
       getPings: getPings,
-      getSinglePing: getSinglePing
+      getSinglePing: getSinglePing,
+      getMessages: getMessages,
+      getSingleMessage: getSingleMessage,
+      addMessage: addMessage,
+      editMessage: editMessage
     }
   });
