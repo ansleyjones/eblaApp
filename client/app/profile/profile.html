@@ -1,6 +1,7 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div ng-include="'font.html'"></div>
 
+<div class="container">
 <div class="col-md-12">
 <h1>{{singleProfile.firstName}} {{singleProfile.lastName}}</h1>
 <h2>{{singleProfile.location.city}}, {{singleProfile.location.state}}</h2>
@@ -13,4 +14,5 @@
   <div ng-show="{{item.tradeStat}}"><a href="" ng-click="addPing(newPing)" ng-model="newPing.item"><p>TAG</p></a></div>
 </div>
 
+</div>
 </div>

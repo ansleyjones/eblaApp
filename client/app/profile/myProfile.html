@@ -1,6 +1,7 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div ng-include="'font.html'"></div>
 
+<div class="container">
 <div class="col-md-6">
   <h1>{{myProfile.firstName}} {{myProfile.lastName}}</h1>
   <h2>{{myProfile.location.city}}, {{myProfile.location.state}}</h2>
@@ -53,4 +54,5 @@
     <label for="tradeStat">Item available for artist trade? </label><input type="checkbox" ng-value="true" ng-model="newItem.tradeStat">
     <button type="submit">SUBMIT</button>
   </form>
+</div>
 </div>

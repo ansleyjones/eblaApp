@@ -42,7 +42,7 @@ angular.module('eblaAppApp')
 
     matchSvc.getPings().success(function(pings){
       $scope.pings = pings;
-      $scope.matches = [];
+      // $scope.matches = [];
       $scope.matchesPinged = [];
 
       $scope.pinged = _.filter(pings, function(ping){
@@ -55,14 +55,14 @@ angular.module('eblaAppApp')
         return ping.read === false;
       });
 
-      for (var i = 0; i < $scope.pinged.length; i++) {
-        for (var j = 0; j < $scope.myPings.length; j++) {
-          if ($scope.pinged[i].recipient._id === $scope.myPings[j].sender._id) {
-            $scope.matches.push($scope.myPings[j]);
-          }
-        }
-      }
-      $scope.matches = _.uniq($scope.matches);
+      // for (var i = 0; i < $scope.pinged.length; i++) {
+      //   for (var j = 0; j < $scope.myPings.length; j++) {
+      //     if ($scope.pinged[i].recipient._id === $scope.myPings[j].sender._id) {
+      //       $scope.matches.push($scope.myPings[j]);
+      //     }
+      //   }
+      // }
+
 
       for (var i = 0; i < $scope.myPings.length; i++) {
         for (var j = 0; j < $scope.pinged.length; j++) {
@@ -72,13 +72,18 @@ angular.module('eblaAppApp')
         }
       }
       $scope.matchesPinged = _.uniq($scope.matchesPinged);
-      console.log($scope.matchesPinged);
 
+      // for (var i = 0; i < $scope.myPings.length; i++) {
+      //   if ($scope.myPings[i].sender._id === $scope.tradeOpts[0].recipient._id) {
+      //     $scope.matches.push($scope.myPings[i])
+      //   }
+      // }
+      // $scope.matches = _.uniq($scope.matches);
       socket.syncUpdates('ping', $scope.matches);
       socket.syncUpdates('ping', $scope.pinged);
       socket.syncUpdates('ping', $scope.myPings);
       socket.syncUpdates('ping', $scope.pings);
-      return [$scope.matches, $scope.matchesPinged];
+      return $scope.matchesPinged;
 
 
     });
@@ -89,6 +94,7 @@ angular.module('eblaAppApp')
 
     $scope.addTradeOpt = function(ping){
       $scope.tradeOpts.push(ping);
+      $scope.matches = [];
       $scope.myPing = _.find($scope.tradeOpts, function(ping){
         return ping.sender.user === $scope.currentUser._id;
       });
@@ -100,14 +106,27 @@ angular.module('eblaAppApp')
       console.log('your ping');
       console.log($scope.yourPing);
 
+      for (var i = 0; i < $scope.myPings.length; i++) {
+        if ($scope.myPings[i].sender._id === $scope.tradeOpts[0].recipient._id) {
+          $scope.matches.push($scope.myPings[i])
+        }
+      }
+      $scope.matches = _.uniq($scope.matches);
+      return $scope.matches;
+
     };
 
-    $scope.removeTradeOpt = function(ping){
-      $scope.tradeOpts.splice(ping, 1);
+    $scope.removeTradeOpt = function(idx){
+      var myId = idx;
+      $scope.myPing = _.find($scope.tradeOpts, function(ping){
+        return ping._id === myId;
+      })
+      $scope.tradeOpts.splice($scope.myPing, 1);
     };
 
     $scope.tradeStats = function(){
       $scope.stats = $scope.yourPing.item.price - $scope.myPing.item.price;
         console.log($scope.stats);
+
     };
   });
