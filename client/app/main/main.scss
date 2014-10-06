@@ -2,28 +2,65 @@ body{
   font-family: 'Yanone Kaffeesatz';
   font-weight: 300;
 }
-.thing-form {
-    margin: 20px 0;
+
+.container{
+  margin-top: 90px;
+}
+.navbar{
+  background-color: rgba(255,255,255,0);
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  top: 0px;
+  li{
+    margin-top: 40px;
+  }
+}
+.navbar-main{
+  float: left;
 }
 
-#banner {
-    border-bottom: none;
-    margin-top: -20px;
+.navbar-right{
+  float: right;
+}
+.navbar-text{
+  margin-top: 10px;
 }
 
-#banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+
+.myLogo{
+  text-align: center;
+  a{
+    img{
+      width: 100px;
+    }
+  }
 }
 
-.hero-unit {
-    position: relative;
-    padding: 30px 15px;
-    color: #F5F5F5;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
+
+.myHeader{
+  height: 700px;
+  min-width: 100%;
+  background-image: url('http://thefreshexchangeblog.com/assets/Studio_Inspiration_01.jpg');
+  background-size: cover;
+}
+.myCaro{
+  margin-top: 0px;
+}
+.carousel{
+  /* height: 700px; */
+  opacity: .75;
+  img{
+    max-height: 700px;
+    min-width: 100%;
+    opacity: .75;
+  }
+}
+.logo{
+  position: absolute;
+  top: 200px;
+  left: 34%;
+  z-index: 100;
 }
 
 .footer {

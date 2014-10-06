@@ -119,7 +119,19 @@ angular.module('eblaAppApp')
       $http.delete(itemsUrl + "/" + id).then(function(response){
         $rootScope.$broadcast("item:deleted");
       });
-    }
+    };
+
+    var messagesUrl = "/api/messages";
+
+    var getMessages = function(){
+      return $http.get(messagesUrl);
+    };
+
+    var deleteMessage = function(id){
+      $http.delete(messagesUrl + "/" + id).then(function(response){
+        $rootScope.$broadcast("message:deleted");
+      });
+    };
 
     return{
       getUsers: getUsers,
@@ -141,8 +153,10 @@ angular.module('eblaAppApp')
       getSingleItem: getSingleItem,
       addItem: addItem,
       editItem: editItem,
-      deleteItem: deleteItem
+      deleteItem: deleteItem,
 
+      getMessages: getMessages,
+      deleteMessage: deleteMessage
     }
 
   });

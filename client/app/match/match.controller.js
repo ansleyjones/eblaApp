@@ -134,9 +134,10 @@ angular.module('eblaAppApp')
       matchSvc.addMessage({
         user: $scope.currentUser._id,
         pingItems: $scope.tradeOpts,
+        recReq: $scope.yourPing.sender.user,
         subject: newMessage.subject,
         message: newMessage.message,
-        read: false,
+        accepted: "pending",
         active: true
       });
 

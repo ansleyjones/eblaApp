@@ -18,6 +18,9 @@ angular.module('eblaAppApp')
       $scope.pings = pings;
     });
 
+    mainSvc.getMessages().success(function(messages){
+      $scope.messages = messages;
+    });
 
     $scope.deleteProfile = function(id){
       mainSvc.deleteProfile(id);
@@ -31,6 +34,9 @@ angular.module('eblaAppApp')
       mainSvc.deletePing(id);
     };
 
+    $scope.deleteMessage = function(id){
+      mainSvc.deleteMessage(id);
+    };
     $scope.delete = function(user) {
       User.remove({ id: user._id });
       angular.forEach($scope.users, function(u, i) {

@@ -2,7 +2,8 @@
 <div ng-include="'font.html'"></div>
 
 <div class="container">
-<div class="col-md-6">
+<div class="col-md-3">
+  <img src="{{myProfile.image}}" alt="" style="width: 200px; border-radius: 1%;">
   <h1>{{myProfile.firstName}} {{myProfile.lastName}}</h1>
   <h2>{{myProfile.location.city}}, {{myProfile.location.state}}</h2>
   <h3>About Me</h3>
@@ -37,7 +38,7 @@
 
 
 </div>
-<div class="col-md-6">
+<div class="col-md-9">
   <h2>My Work</h2>
     <div ng-repeat="item in myItems">
       <h3><a>{{item.title}}</a></h3>

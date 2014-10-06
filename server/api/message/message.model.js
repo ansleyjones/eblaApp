@@ -6,9 +6,10 @@ var mongoose = require('mongoose'),
 var MessageSchema = new Schema({
   user: { type: Schema.ObjectId, ref: 'User' },
   pingItems: [],
+  recReq: String,
   subject: String,
   message: String,
-  read: Boolean,
+  accepted: String,
   active: Boolean
 });
 

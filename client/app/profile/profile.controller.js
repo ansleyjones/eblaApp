@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eblaAppApp')
-  .controller('ProfileCtrl', function ($scope, _, $location, $routeParams, socket, Auth, mainSvc) {
+  .controller('ProfileCtrl', function ($scope, _, $location, $routeParams, socket, Auth, mainSvc, matchSvc) {
 
     $scope.currentUser = Auth.getCurrentUser();
 
@@ -16,6 +16,7 @@ angular.module('eblaAppApp')
       'Graphics'
     ];
 
+// GET PROFILES
     mainSvc.getSingleProfile($routeParams.idx).success(function(profile){
       $scope.singleProfile = profile;
       mainSvc.getItems().success(function(items){
@@ -38,6 +39,8 @@ angular.module('eblaAppApp')
       };
     });
 
+
+// GET ITEMS
     mainSvc.getItems().success(function(items){
       $scope.items = items;
 
@@ -51,6 +54,8 @@ angular.module('eblaAppApp')
       return $scope.myItems;
     });
 
+
+// GET PINGS
     mainSvc.getPings().success(function(pings){
       $scope.pings = pings;
       $scope.matches=[];
@@ -76,12 +81,29 @@ angular.module('eblaAppApp')
       console.log("matches");
       console.log($scope.matches);
       return $scope.matches;
-
-
       socket.syncUpdates('ping', $scope.matches);
       socket.syncUpdates('ping', $scope.pinged);
       socket.syncUpdates('ping', $scope.myPings);
       socket.syncUpdates('ping', $scope.pings);
+    });
+
+
+// GET MESSAGES
+    matchSvc.getMessages().success(function(messages){
+      $scope.messages = messages;
+      $scope.mySentReqs = _.filter(messages, function(message){
+        return message.user._id === $scope.currentUser._id;
+      });
+      $scope.myRecReqs = _.filter(messages, function(message){
+        return message.recReq === $scope.currentUser._id;
+      });
+
+      console.log("sent messages");
+      console.log($scope.mySentReqs);
+
+      console.log("received messages");
+      console.log($scope.myRecReqs);
+
     });
 
     $scope.editProfile = function(profile){
