@@ -1,5 +1,8 @@
 'use strict';
-
+angular.module('lodash', [])
+  .factory('_', function(){
+    return window._;
+  });
 angular.module('eblaAppApp', [
   'ngCookies',
   'ngResource',
@@ -55,8 +58,3 @@ angular.module('eblaAppApp', [
       });
     });
   });
-
-  angular.module('lodash', [])
-    .factory('_', function(){
-      return window._;
-    });

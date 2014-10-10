@@ -108,9 +108,9 @@ angular.module('eblaAppApp')
       });
     };
 
-    var editItem = function(item){
-      $http.put(itemsUrl + "/" + item._id, item).then(function(response){
-        $rootScope.$broadcast("item:updated");
+    var editMessage = function(message){
+      $http.put(messagesUrl + "/" + message._id, message).then(function(response){
+        $rootScope.$broadcast("message:updated");
       });
     };
 
@@ -126,7 +126,11 @@ angular.module('eblaAppApp')
     var getMessages = function(){
       return $http.get(messagesUrl);
     };
-
+    var editItem = function(item){
+      $http.put(itemsUrl + "/" + item._id, item).then(function(response){
+        $rootScope.$broadcast("item:updated");
+      });
+    };
     var deleteMessage = function(id){
       $http.delete(messagesUrl + "/" + id).then(function(response){
         $rootScope.$broadcast("message:deleted");
@@ -156,7 +160,8 @@ angular.module('eblaAppApp')
       deleteItem: deleteItem,
 
       getMessages: getMessages,
-      deleteMessage: deleteMessage
+      deleteMessage: deleteMessage,
+      editMessage: editMessage
     }
 
   });

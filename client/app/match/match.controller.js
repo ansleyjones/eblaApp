@@ -121,7 +121,7 @@ angular.module('eblaAppApp')
       $scope.myPing = _.find($scope.tradeOpts, function(ping){
         return ping._id === myId;
       })
-      $scope.tradeOpts.splice($scope.myPing, 1);
+      $scope.tradeOpts.splice($scope.tradeOpts.indexOf($scope.myPing), 1);
     };
 
     $scope.tradeStats = function(){
@@ -132,14 +132,16 @@ angular.module('eblaAppApp')
 
     $scope.addMessage = function(newMessage){
       matchSvc.addMessage({
+        sender: $scope.myProfile._id,
         user: $scope.currentUser._id,
         pingItems: $scope.tradeOpts,
         recReq: $scope.yourPing.sender.user,
         subject: newMessage.subject,
         message: newMessage.message,
         accepted: "pending",
+        date: new Date(),
         active: true
       });
-
+      $location.path('/profile');
     }
   });

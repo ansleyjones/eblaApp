@@ -1,6 +1,18 @@
+.matchLink{
+  color: $sea;
+  &:hover{
+    color: $yellow;
+  }
+}
+p{
+  font-size: 17px;
+  margin-bottom: 0px;
+}
+li{
+  font-size: 17px;
+}
 .matcher{
-  border: 1px solid red;
-  height: 500px;
+  height: 600px;
   .firstMatch{
     width: 200px;
     padding: 0px;
@@ -18,9 +30,15 @@
   .stats{
     margin-top: 280px;
     text-align: center;
+    input{
+      margin-bottom:10px;
+    }
   }
 }
 
+.theirPings{
+  text-align: right;
+}
 .pinged{
   ul{
     padding: 0px;

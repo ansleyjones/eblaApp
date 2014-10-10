@@ -1,3 +1,17 @@
+/* MYPROFILE */
+
+/* TAB STUFF */
+.nav-justified > li > a, .nav-tabs.nav-justified > li > a{
+  font-size: 18px;
+  color: $darkGrey;
+  &:hover{
+    color: $yellow;
+  }
+}
+.tab-content > .active{
+  padding-top: 15px;
+}
+
 .myPings{
   ul{
     padding-left: 5px;
@@ -5,4 +19,274 @@
   li{
     list-style-type:none;
   }
+  a{
+    color: $sea;
+    &:hover{
+      color: $yellow;
+    }
+  }
+}
+
+.profStuff{
+  h1{
+    margin-top: 5px;
+    text-align: center;
+  }
+  h2{
+    margin-top: -5px;
+    text-align: center;
+  }
+  .trades{
+    padding-left: 10px;
+    margin: 0px;
+    li{
+      list-style-type: none;
+      padding: 0px;
+      margin: 0px;;
+    }
+  }
+
+  .editProf{
+    font-size: 15px;
+    padding: 5px;
+    color: $sea;
+    border: 1px solid $sea;
+    &:hover{
+      color: $yellow;
+      border: 1px solid $yellow;
+      text-decoration: none;
+    }
+  }
+
+  form{
+    padding-top: 20px;
+  }
+}
+.profItems{
+  section{
+    margin-bottom: 25px;
+  }
+}
+
+
+
+.profItems{
+  text-align: center;
+  .itemImg{
+    text-align: center;
+  }
+  .title{
+    margin: 0px;
+    float: left;
+  }
+  .price{
+    float: right;
+    padding-right: 10%;
+  }
+  .avail{
+    float: left;
+    clear: both;
+  }
+}
+
+.myPinged{
+  ul{
+/* width: 80%; */
+/* margin: auto; */
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 40px;
+    li{
+      list-style-type: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+  }
+  a{
+    color: $sea;
+    &:hover{
+      color: $yellow;
+    }
+  }
+  .pingedRight{
+    float: right;
+    padding-right: 50px;
+    vertical-align: top;
+    img{
+      max-width: 90px;
+      max-height: 85px;
+    }
+  }
+}
+
+
+
+
+.tradeReqsTab{
+  width: 80%;
+  margin: auto;
+  a{
+    color: $darkGrey;
+    &:hover{
+      color: $yellow;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+  li{
+    margin-bottom: 10px;
+  }
+  .createRequest{
+    font-size: 24px;
+    font-weight: 400;
+    color: $sea;
+    padding: 5px;
+    border: 1px solid $sea;
+    &:hover{
+      color: $yellow;
+      border: 1px solid $yellow;
+    }
+  }
+  .reqContact{
+    list-style-type: none;
+    padding-left: 8px;
+    margin: 0px;
+    li{
+      margin: 0px;
+    }
+  }
+  .reqFilters{
+    font-weight: 400;
+    border-bottom: 1px solid lightgrey;
+    span{
+      a{
+        color: $sea;
+        font-weight: 400;
+        &:hover{
+          color: $yellow;
+        }
+      }
+    }
+  }
+  .accept{
+    color: $darkGrey;
+    border: 1px solid $darkGrey;
+    padding: 5px;
+    &:hover{
+      color: $green;
+      border: 1px solid $green;
+      text-decoration: none;
+    }
+  }
+  .decline{
+    color: $darkGrey;
+    border: 1px solid $darkGrey;
+    padding: 5px;
+    &:hover{
+      color: $red;
+      border: 1px solid $red;
+      text-decoration: none;
+    }
+  }
+  .noMatch{
+    font-size: 16px;
+  }
+  .receivedHeader{
+    margin-top: 25px;
+  }
+  .pendingTrades{
+    li{
+      a{
+        color: $sea;
+        &:hover{
+          color: $yellow;
+        }
+      }
+      .tradeComp{
+        float:right;
+        font-weight: 400;
+        margin-right: 30%;
+        color: $green;
+      }
+    }
+  }
+
+/* ACCORDION STUFF */
+  .panel-default {
+    position: relative;
+    border: none;
+    .panel-heading {
+      background-color: white;
+      position: absolute;
+      right: 35%;
+      top: -20px;
+      padding: 0;
+    }
+  }
+}
+
+.recMess{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 5px;
+  .from{
+    float: left;
+    width: 25%;
+    a{
+      color: $sea;
+      &:hover{
+        color: $yellow;
+      }
+    }
+  }
+  .subject{
+
+  }
+
+}
+.rechead{
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+
+
+/* SINGLE PROFILE */
+#itemHead{
+  text-align: center;
+  margin:0px;
+  padding-bottom: 25px;
+}
+
+.itemIcons{
+  text-align: center;
+  display: block;
+  clear: both;
+  font-size: 25px;
+  margin-left: -12%;
+  span{
+    margin-left:8px;
+    margin-right: 8px;
+  }
+  .heartSym{
+    color: $darkGrey;
+    &:hover{
+      color: $red;
+    }
+  }
+  .tagSym{
+    color: $darkGrey;
+    &:hover{
+      color: $sea;
+    }
+  }
+  .eyeSym{
+    color: $darkGrey;
+    &:hover{
+      color: $yellow;
+    }
+  }
+}
+footer{
+  min-height: 45px;
 }

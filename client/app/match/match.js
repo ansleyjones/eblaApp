@@ -3,7 +3,7 @@
 angular.module('eblaAppApp')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/:idx/match', {
+      .when('/match', {
         templateUrl: 'app/match/match.html',
         controller: 'MatchCtrl'
       });

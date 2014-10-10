@@ -3,7 +3,7 @@
 angular.module('eblaAppApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
+      'title': 'HOME',
       'link': '/'
     }];
 
@@ -14,7 +14,7 @@ angular.module('eblaAppApp')
 
     $scope.logout = function() {
       Auth.logout();
-      $location.path('/login');
+      $location.path('/');
     };
 
     $scope.isActive = function(route) {

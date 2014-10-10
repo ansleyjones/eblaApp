@@ -2,17 +2,59 @@
 <div ng-include="'font.html'"></div>
 
 <div class="container">
-<div class="col-md-12">
-<h1>{{singleProfile.firstName}} {{singleProfile.lastName}}</h1>
-<h2>{{singleProfile.location.city}}, {{singleProfile.location.state}}</h2>
-<h3>About {{singleProfile.firstName}}</h3>
-<p>{{singleProfile.about}}</p>
-<div ng-repeat="item in userItems">
-  <h3><a href="">{{item.title}}</a></h3>
-  <p>${{item.price}}</p>
-  <p ng-show="{{item.tradeStat}}">AVAILABLE</p>
-  <div ng-show="{{item.tradeStat}}"><a href="" ng-click="addPing(newPing)" ng-model="newPing.item"><p>TAG</p></a></div>
+<div class="col-md-3 profStuff">
+  <img src="{{singleProfile.image}}" alt="" style="width: 200px; border-radius: 100%;">
+  <h1 class="profName">{{singleProfile.firstName}} {{singleProfile.lastName}}</h1>
+  <h2 class="profLoc"><i class="fa fa-map-marker"></i> {{singleProfile.location.city}}, {{singleProfile.location.state}}</h2>
+  <h3 class="profAbout">About Me</h3>
+    <p>{{singleProfile.about}}</p>
+  <h3>Trades</h3>
+    <ul class="trades" ng-repeat="trade in singleProfile.trade">
+      <li>{{trade}}</li>
+    </ul>
+
+
+
 </div>
+<div class="col-md-9">
+  <h1 id="itemHead">{{singleProfile.firstName}}'s Work</h1>
+    <div ng-repeat="item in userItems" class="profItems">
+      <section class="col-md-6">
+        <div class="itemImg"
+          style="background-image:
+          url('{{item.image}}');
+          width:275px;
+          height:275px;
+          background-position:center;">&nbsp;
+        </div>
+        <h3 class="title">{{item.title}}</h3>
+        <p class="price">${{item.price}}</p>
+        <p ng-if="item.tradeStat===true" class="avail">Available</p>
+        <div class="itemIcons">
+          <span><a href="" ng-click="addLike(item)" class="heartSym"><i class="fa fa-heart"></i></a></span>
+          <span><a href="" class="eyeSym" ng-click="open(item)"><i class="fa fa-eye"></i></a>
+
+                <script type="text/ng-template" id="imageShow.html">
+                    <div class="modal-header" style="border: none;">
+
+                        <a href="" ng-click="cancel()" style="float: right;"><i class="fa fa-times" style="font-size: 20px;"></i></a>
+                    </div>
+                    <div class="modal-body">
+                      <img src="{{item.image}}" alt="" style="width:100%;">
+                      <h3 style="text-align: center;">{{item.title}}</h3>
+                    </div>
+
+
+
+                </script>
+            </span>
+
+          <span ng-if="item.tradeStat===true" ng-show="isLoggedIn()"><a href="" ng-click="addPing(newPing)" ng-model="newPing.item" class="tagSym"><i class="fa fa-tag"></i></a></span>
+        </div>
+
+      </section>
+    </div>
 
 </div>
 </div>
+<footer></footer>

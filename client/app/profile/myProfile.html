@@ -2,58 +2,159 @@
 <div ng-include="'font.html'"></div>
 
 <div class="container">
-<div class="col-md-3">
-  <img src="{{myProfile.image}}" alt="" style="width: 200px; border-radius: 1%;">
-  <h1>{{myProfile.firstName}} {{myProfile.lastName}}</h1>
-  <h2>{{myProfile.location.city}}, {{myProfile.location.state}}</h2>
-  <h3>About Me</h3>
+<div class="col-md-3 profStuff">
+  <img src="{{myProfile.image}}" alt="" style="width: 200px; border-radius: 100%;">
+  <h1 class="profName">{{myProfile.firstName}} {{myProfile.lastName}}</h1>
+  <h2 class="profLoc"><i class="fa fa-map-marker"></i> {{myProfile.location.city}}, {{myProfile.location.state}}</h2>
+  <h3 class="profAbout">About Me</h3>
     <p>{{myProfile.about}}</p>
-    <section ng-repeat="trade in myProfile.trade">
-      <p>{{trade}}</p>
-    </section>
-  <a href="" ng-click="revealPings=!revealPings"><i class="fa fa-bookmark" ng-if="unreadPings.length>0" style="font-size: 30px;"></i><i class="fa fa-bookmark-o" ng-if="unreadPings.length === 0" style="font-size: 30px;"></i></a><span> ({{unreadPings.length}})</span>
-    <div class="myPings" ng-repeat="ping in myPings"  ng-show="revealPings">
-      <ul>
-        <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
-        <li>{{ping.date | date:'MMM dd, y'}}</li>
-        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
-        <li><a href="" ng-click="deletePing(ping._id)">DELETE</a></li></li>
-        <br>
-      </ul>
-    </div>
-  <a href="" ng-click="revealPinged=!revealPinged"><i class="fa fa-star" ng-if="unreadPings.length>0" style="font-size: 30px;"></i><i class="fa fa-bookmark-o" ng-if="unreadPings.length === 0" style="font-size: 30px;"></i></a><span> ({{unreadPings.length}})</span>
-    <div class="myPings" ng-repeat="ping in pinged"  ng-show="revealPinged">
-      <ul>
-        <li><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</li>
-        <li>{{ping.date | date:'MMM dd, y'}}</li>
-        <li><form action="" ng-submit="editPing(ping)">MARK AS READ <input type="checkbox" ng-value="true" ng-model="ping.read"> <button type="submit">OK</button></form></li>
-        <li><a href="" ng-click="deletePing(ping._id)">DELETE</a></li></li>
-        <br>
-      </ul>
-    </div>
-  <a href="/{{myProfile._id}}/match" ng-click="revealMatch=!revealMatch"><i class="fa fa-exchange" style="font-size: 30px;"></i></a><span> ({{matches.length}})</span>
-    <div class="matches" ng-repeat="match in matches track by $index" ng-show="revealMatch">
-      <li><a href="/profile/{{match.recipient.user}}">Tag match with {{match.sender.firstName}} {{match.sender.lastName}}</li>
-    </div>
+  <h3>Trades</h3>
+    <ul class="trades" ng-repeat="trade in myProfile.trade">
+      <li>{{trade}}</li>
+    </ul>
+    <br>
+    <a class="editProf" href="/edit">EDIT PROFILE</a>
+    <br><br>
+    <a href="" ng-click="itemForm=!itemForm" class="editProf">ADD WORK</a>
+    <form ng-show="itemForm" class="itemForm" ng-submit="addItem(newItem)">
+      <label for="title">Title: </label><input type="text" ng-model="newItem.title"><br>
+      <label for="price">Price: $</label><input type="Number" ng-model="newItem.price"><br>
+      <label for="image">Image Url: </label><input type="text" ng-model="newItem.image">
+      <br><br>
+      <label for="tradeStat">Item available for artist trade? </label><input type="checkbox" ng-value="true" ng-model="newItem.tradeStat">
+      <button type="submit">SUBMIT</button>
+    </form>
 
 
 </div>
 <div class="col-md-9">
-  <h2>My Work</h2>
-    <div ng-repeat="item in myItems">
-      <h3><a>{{item.title}}</a></h3>
-      <p>${{item.price}}</p>
+
+  <tabset justified="true">
+
+    <tab heading="MY ITEMS">
+        <div ng-repeat="item in myItems" class="profItems">
+          <section class="col-md-6">
+            <div class="itemImg"
+              style="background-image:
+              url('{{item.image}}');
+              width:275px;
+              height:275px;
+              background-position:center;">&nbsp;
+            </div>
+            <h3 class="title">{{item.title}}</h3>
+            <p class="price">${{item.price}}</p>
+            <p ng-if="item.tradeStat===true" class="avail">Available</p>
+          </section>
+        </div>
+    </tab>
+
+    <tab heading="TAGS">
+      <div ng-repeat="ping in myPings" class="myPinged">
+      <ul>
+        <li><p><a href="/profile/{{ping.sender._id}}">{{ping.sender.firstName}} {{ping.sender.lastName}}</a> tagged {{ping.item.title}}</a></p> <p>{{ping.date | date:'MMM dd, y'}}</p></li>
+        <li></li>
+        <li class="pingedRight"><img src="{{ping.item.image}}" alt=""></li>
+        <br>
+      </ul>
     </div>
+    </tab>
+
+    <tab heading="TAGGED ITEMS">
+      <div ng-repeat="ping in pinged" class="myPinged">
+      <ul>
+        <li><p>You tagged <a href="/profile/{{ping.recipient._id}}">{{ping.recipient.firstName}}'s {{ping.item.title}}</a></p> <p>{{ping.date | date:'MMM dd, y'}}</p></li>
+        <li></li>
+        <li class="pingedRight"><a href="/profile/{{ping.recipient._id}}"><img src="{{ping.item.image}}" alt=""></a></li>
+        <br>
+      </ul>
+    </div>
+    </tab>
 
 
-  <a href="" ng-click="itemForm=!itemForm"><i class="fa fa-plus-square-o" style="font-size:50px;"></i></a>
-  <form ng-show="itemForm" class="itemForm" ng-submit="addItem(newItem)">
-    <label for="title">Title: </label><input type="text" ng-model="newItem.title"><br>
-    <label for="price">Price: $</label><input type="Number" ng-model="newItem.price"><br>
-    <label for="image">Image Url: </label><input type="text" ng-model="newItem.image">
-    <br><br>
-    <label for="tradeStat">Item available for artist trade? </label><input type="checkbox" ng-value="true" ng-model="newItem.tradeStat">
-    <button type="submit">SUBMIT</button>
-  </form>
+    <tab heading="TRADE REQUESTS">
+      <div class="tradeReqsTab">
+      <span ng-if="matches.length>0"><a class="createRequest" href="/match">CREATE NEW REQUEST</a></span>
+
+      <section ng-if="matches.length===0" class="noMatch">
+        <p>You don't have tag matches at this time.</p>
+      </section>
+      <section ng-if="matches.length > 0">
+        <h3>PENDING TRADES</h3>
+          <ul ng-repeat="req in pendingTrades" style="list-style-type: none; padding:0;" class="pendingTrades">
+            <li ng-if="req.active===true"><span ng-if="req.pingItems[0].recipient.user===currentUser._id">Your </span><span ng-if="req.pingItems[0].recipient.user != currentUser._id">{{req.pingItems[0].recipient.firstName}} {{req.pingItems[0].recipient.lastName}}'s </span><a href="/profile/{{req.pingItems[0].item.profile}}">{{req.pingItems[0].item.title}} </a> <i class="fa fa-arrows-h" style="font-size: 20px;"></i><span ng-if="req.pingItems[1].recipient.user===currentUser._id"> Your </span> <span ng-if="req.pingItems[1].recipient.user != currentUser._id">{{req.pingItems[1].recipient.firstName}} {{req.pingItems[1].recipient.lastName}}'s </span> <a href="/profile/{{req.pingItems[1].item.profile}}">{{req.pingItems[1].item.title}}</a> <a class="tradeComp" href="" ng-click="messActive(req)">COMPLETE</a></li>
+            <li ng-if="req.active===true"  style="margin:0px; font-weight: 400;"><span ng-if="req.pingItems[0].recipient.user != currentUser._id">{{req.pingItems[0].recipient.firstName}}'s Contact Info: </span><span ng-if="req.pingItems[1].recipient.user != currentUser._id">{{req.pingItems[1].recipient.firstName}}'s Contact Info:</span></li>
+            <ul ng-if="req.active===true" class="reqContact">
+              <li ng-if="req.active===true"><span ng-if="req.pingItems[0].recipient.user != currentUser._id">{{req.pingItems[0].recipient.address}}</span><span ng-if="req.pingItems[1].recipient.user != currentUser._id">{{req.pingItems[1].recipient.address}}</span></li>
+              <li ng-if="req.active===true"><span ng-if="req.pingItems[0].recipient.user != currentUser._id">{{req.pingItems[0].recipient.location.city}}, {{req.pingItems[0].recipient.location.state}} {{req.pingItems[0].recipient.zip}}</span><span ng-if="req.pingItems[1].recipient.user != currentUser._id">{{req.pingItems[1].recipient.location.city}}, {{req.pingItems[1].recipient.location.state}} {{req.pingItems[1].recipient.zip}}</span></li>
+              <li ng-if="req.active===true"><span ng-if="req.pingItems[0].recipient.user != currentUser._id">{{req.pingItems[0].recipient.phone}}</span><span ng-if="req.pingItems[1].recipient.user != currentUser._id">{{req.pingItems[1].recipient.phone}}</span></li>
+            </ul>
+          </ul>
+      </section>
+
+
+      <section ng-if="matches.length > 0">
+        <h3>SENT</h3>
+        <p class="reqFilters">FILTER REQUESTS:&nbsp &nbsp &nbsp<span><a href="" ng-click="search.accepted=''">ALL</a></span>&nbsp &nbsp &nbsp<span><a href="" ng-click="search.accepted='pending'">PENDING</a></span>&nbsp &nbsp &nbsp<span><a href="" ng-click="search.accepted='accepted'">ACCEPTED</a></span>&nbsp &nbsp &nbsp<span><a href="" ng-click="search.accepted='declined'">DECLINED</a></span></p><br>
+        <p ng-if="mySentReqs==0">You haven't sent any trade requests.</p>
+        <header ng-if="mySentReqs.length>0" class="col-md-3" style="padding: 0;"><p class="rechead" style="font-size: 17px;">TO</p></header>
+        <header ng-if="mySentReqs.length>0" class="col-md-9" style="padding: 0;"><p class="rechead" style="font-size: 17px;">SUBJECT</p></header>
+
+        <div class="acc" style="position: relative;">
+        <accordion close-others="oneAtATime">
+          <ul ng-repeat="req in mySentReqs | orderBy : 'date' : true | filter : search : strict" class="recMess" style="list-style-type: none; margin: 0; padding: 0;">
+            <li><span class="from"><a href="/profile/{{req.sender._id}}">{{req.pingItems[0].recipient.firstName}} {{req.pingItems[0].recipient.lastName}}</a></span><span class="subject">{{req.subject}} ({{req.date | date:'M/dd/yy'}})</span>
+              <accordion-group heading="READ MORE" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                <p>{{req.message}}</p>
+                <p style="font-weight: 400;">TRADE DETAILS:</p>
+                  <span><img src="{{req.pingItems[0].item.image}}" alt="" style="width: 75px; height: 75px;"></span>
+                  <span><i class="fa fa-arrows-h" style="font-size: 30px;"></i></span>
+                  <span><img src="{{req.pingItems[1].item.image}}" alt="" style="width: 75px; height: 75px;"></span>
+                  <p class="statloss">Est. cost difference: ${{req.pingItems[0].item.price - req.pingItems[1].item.price}}</p>
+
+                <p style="text-transform: uppercase; margin-top: 8px; font-weight: 400;">Status: {{req.accepted}}</p>
+              </accordion-group>
+            </li>
+          </ul>
+        </accordion>
+        </div>
+
+      </section>
+
+      <section ng-if="matches.length > 0">
+        <h3 class="receivedHeader">RECEIVED</h3>
+          <p class="reqFilters">FILTER REQUESTS:&nbsp &nbsp &nbsp<span><a href="" ng-click="filt.accepted=''">ALL</a></span>&nbsp &nbsp &nbsp<span><a href="" ng-click="filt.accepted='pending'">PENDING</a></span>&nbsp &nbsp &nbsp<span><a href="" ng-click="filt.accepted='accepted'">ACCEPTED</a></span>&nbsp &nbsp &nbsp<span><a href="" ng-click="filt.accepted='declined'">DECLINED</a></span></p><br>
+          <p ng-if="myRecReqs.length==0">You haven't received any trade requests.</p>
+
+          <header ng-if="myRecReqs.length>0" class="col-md-3" style="padding: 0;"><p  class="rechead" style="font-size: 17px;">FROM</p></header>
+          <header ng-if="myRecReqs.length>0" class="col-md-9" style="padding: 0;"><p  class="rechead" style="font-size: 17px;">SUBJECT</p></header>
+
+        <div class="acc" style="position: relative;">
+          <accordion close-others="oneAtATime">
+
+          <ul ng-repeat="req in myRecReqs | orderBy : 'date' : true | filter : filt : strict" class="recMess" style="list-style-type: none; margin: 0; padding: 0;">
+            <li><span class="from"><a href="/profile/{{req.sender._id}}">{{req.sender.firstName}} {{req.sender.lastName}}</a></span><span class="subject">{{req.subject}} ({{req.date | date:'M/dd/yy'}})</span>
+              <accordion-group heading="READ MORE" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                <p>{{req.message}}</p>
+                <p style="font-weight: 400;">TRADE DETAILS:</p>
+                  <span><img src="{{req.pingItems[0].item.image}}" alt="" style="width: 75px; height: 75px;"></span>
+                  <span><i class="fa fa-arrows-h" style="font-size: 30px;"></i></span>
+                  <span><img src="{{req.pingItems[1].item.image}}" alt="" style="width: 75px; height: 75px;"></span>
+                <p class="statloss">Est. cost difference: ${{req.pingItems[0].item.price - req.pingItems[1].item.price}}</p>
+                <p style="text-transform: uppercase; margin-top: 8px; font-weight: 400;">Status: {{req.accepted}}</p>
+                <div ng-if="req.accepted==='pending'">
+                  <a href="" class="accept" ng-click="accMessage(req)" ng-model="req.accepted">ACCEPT</a> &nbsp <a href="" class="decline" ng-click="decMessage(req)">DECLINE</a>
+                </div>
+              </accordion-group>
+            </li>
+          </ul>
+
+        </accordion>
+        </div>
+
+      </section>
+    </div>
+    </tab>
+  </tabset>
 </div>
 </div>
+<footer></footer>

@@ -14,6 +14,10 @@ angular.module('eblaAppApp')
       .when('/profile', {
         templateUrl: 'app/profile/myProfile.html',
         controller: 'ProfileCtrl'
+      })
+      .when('/edit', {
+        templateUrl: 'app/profile/editProfile.html',
+        controller: 'ProfileCtrl'
       });
 
   });

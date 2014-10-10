@@ -13,6 +13,9 @@ var ProfileSchema = new Schema({
     city: String,
     state: String
   },
+  address: String,
+  zip: Number,
+  phone: String,
   about: String,
   active: Boolean
 });

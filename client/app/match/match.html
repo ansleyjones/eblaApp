@@ -7,9 +7,9 @@
   <h3>My Tags</h3>
     <div class="pinged" ng-repeat="ping in matchesPinged track by $index">
       <ul>
-        <li>{{ping.recipient.firstName}}'s <a href="/profile/{{ping.recipient._id}}">{{ping.item.title}}</a></li>
-        <li><img src="{{ping.item.image}}" alt=""></li>
-        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li>
+        <li>{{ping.recipient.firstName}}'s <a class="matchLink" href="/profile/{{ping.recipient._id}}">{{ping.item.title}}</a></li>
+        <li><img src="{{ping.item.image}}" alt="" style="width: 90px;"></li>
+        <li><a class="matchLink" href="" ng-click="addTradeOpt(ping)">ADD</a></li>
         <br>
       </ul>
     </div>
@@ -19,40 +19,42 @@
   <div class="matchOpts" ng-repeat="ping in tradeOpts">
     <section class="col-md-3 firstMatch">
       <div ng-if="ping.sender.user==currentUser._id">
-        <img src="{{ping.item.image}}" alt="">
-
-        <a href="" ng-click="removeTradeOpt(ping._id)">Remove</a>
+        <img src="{{ping.item.image}}" alt="" style="width: 180px; height: 180px;">
+        <p>{{ping.item.title}}</p>
+        <p><i class="fa fa-map-marker"></i> {{ping.recipient.location.city}}, {{ping.recipient.location.state}}</p>
+        <a class="matchLink" href="" ng-if="tradeOpts.length==1" ng-click="removeTradeOpt(ping._id)">Remove</a>
       </div>
     </section>
     <section class="col-md-3 secondMatch">
       <div ng-if="ping.sender.user!=currentUser._id">
-        <img src="{{ping.item.image}}" alt="">
-        <a href="" ng-click="removeTradeOpt(ping._id)">Remove</a>
+        <img src="{{ping.item.image}}" alt="" style="width: 180px; height: 180px; margin-top: -2px;">
+        <p>{{ping.item.title}}</p>
+        <p><i class="fa fa-map-marker"></i> {{ping.recipient.location.city}}, {{ping.recipient.location.state}}</p>
+        <a class="matchLink" href="" ng-if="tradeOpts.length==2" ng-click="removeTradeOpt(ping._id)">Remove</a>
       </div>
     </section>
   </div>
   <div class="stats" ng-if="tradeOpts.length===2">
     <p>{{tradeStats()}}</p>
-    <h3>Trade Stats</h3> <br>
-    <p ng-if="stats<0" class="statloss">Net Loss: ${{stats}}</p>
-    <p ng-if="stats>=0" class="statgain">Net Gain: ${{stats}}</p>
+    <h3>Trade Stats</h3>
+    <p class="statloss">Est. cost difference: {{stats | currency}}</p>
     <br>
-    <a href="" ng-click="createReq=!createReq">CREATE TRADE REQUEST</a>
-      <form action="" ng-show="createReq" ng-submit="addMessage(newMessage)">
-        <input type="text" placeholder="Subject" ng-model="newMessage.subject">
-        <input type="textarea" placeholder="Message" ng-model="newMessage.message">
+    <a class="matchLink" href="" ng-click="createReq=!createReq">CREATE TRADE REQUEST</a>
+      <form action="" ng-show="createReq" ng-submit="addMessage(newMessage)"><br>
+        <input type="text" placeholder="Subject" ng-model="newMessage.subject"><br>
+        <input type="text" rows="10" cols="50" placeholder="Message" ng-model="newMessage.message"><br>
         <button type="submit">SEND REQUEST</button>
       </form>
   </div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-3 theirPings">
   <h3 ng-if="tradeOpts.length>0">{{tradeOpts[0].recipient.firstName}}'s Tags</h3>
     <div class="myPings" ng-if="tradeOpts.length>0" ng-repeat="ping in matches track by $index">
       <ul>
         <li>{{ping.item.title}}</li>
-        <li><img src="{{ping.item.image}}" alt=""></li>
-        <li><a href="" ng-click="addTradeOpt(ping)">ADD</a></li>
+        <li><img src="{{ping.item.image}}" alt="" style="width: 90px;"></li>
+        <li><a class="matchLink" href="" ng-click="addTradeOpt(ping)">ADD</a></li>
         <br>
       </ul>
     </div>

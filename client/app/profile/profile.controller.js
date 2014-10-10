@@ -1,9 +1,23 @@
 'use strict';
 
 angular.module('eblaAppApp')
-  .controller('ProfileCtrl', function ($scope, _, $location, $routeParams, socket, Auth, mainSvc, matchSvc) {
+  .controller('ModalInstanceCtrl', function ($scope, $modalInstance, item) {
+    $scope.item = item;
+
+    $scope.ok = function () {
+      $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+  })
+
+  .controller('ProfileCtrl', function ($scope, _, $location, $routeParams, socket, Auth, mainSvc, matchSvc,  $modal, $log) {
 
     $scope.currentUser = Auth.getCurrentUser();
+    $scope.oneAtATime = true;
+    $scope.isLoggedIn = Auth.isLoggedIn;
 
     $scope.trades = [
       'Painting/Drawing',
@@ -91,23 +105,57 @@ angular.module('eblaAppApp')
 // GET MESSAGES
     matchSvc.getMessages().success(function(messages){
       $scope.messages = messages;
+      $scope.pendingTrades = [];
       $scope.mySentReqs = _.filter(messages, function(message){
         return message.user._id === $scope.currentUser._id;
       });
       $scope.myRecReqs = _.filter(messages, function(message){
         return message.recReq === $scope.currentUser._id;
       });
+      $scope.acceptedReqs = _.filter($scope.myRecReqs, function(message){
+        return message.accepted == "accepted";
+      });
+      $scope.acceptedSent = _.filter($scope.mySentReqs, function(message){
+        return message.accepted == "accepted";
+      });
+      $scope.acceptedAll = $scope.acceptedReqs.concat($scope.acceptedSent);
 
+      for (var i = 0; i < $scope.acceptedAll.length; i++) {
+        if ($scope.acceptedAll[i].active===true) {
+          $scope.pendingTrades.push($scope.acceptedAll[i]);
+        }
+      }
+      return $scope.pendingTrades;
       console.log("sent messages");
       console.log($scope.mySentReqs);
 
       console.log("received messages");
       console.log($scope.myRecReqs);
 
+      socket.syncUpdates($scope.acceptedAll);
+      socket.syncUpdates($scope.myRecReqs);
+      socket.syncUpdates($scope.mySentReqs);
+      socket.syncUpdates($scope.pendingTrades);
     });
 
+    $scope.accMessage = function(message){
+      message.accepted = "accepted";
+      mainSvc.editMessage(message);
+    };
+
+    $scope.decMessage= function(message){
+      message.accepted = "declined";
+      mainSvc.editMessage(message)
+    };
+
+    $scope.messActive = function(message){
+      message.active = false;
+      mainSvc.editMessage(message);
+    }
+
     $scope.editProfile = function(profile){
-      mainSvc.editProfile(profile);
+      mainSvc.editProfile(profile)
+      $location.path('/profile');
     };
 
     $scope.addProfile = function(profile){
@@ -121,6 +169,9 @@ angular.module('eblaAppApp')
           city: profile.location.city,
           state: profile.location.state
         },
+        address: profile.address,
+        zip: profile.zip,
+        phone: profile.phone,
         about: profile.about,
         active: true
       });
@@ -133,10 +184,6 @@ angular.module('eblaAppApp')
       $scope.myTrades.push(trade);
       console.log($scope.myTrades);
     };
-    //
-    // $scope.submitTrades = function () {
-    //   mainSvc.editProfile($scope.Profile);
-    // }
 
 
     $scope.addItem = function(item){
@@ -146,6 +193,7 @@ angular.module('eblaAppApp')
         price: item.price,
         image: item.image,
         tradeStat: item.tradeStat,
+        likes: 0,
         active: true
       });
       socket.syncUpdates('item', $scope.items);
@@ -162,6 +210,7 @@ angular.module('eblaAppApp')
       }
 
       mainSvc.addPing(newPing);
+      $location.path('/profile')
     };
 
     $scope.editPing = function(ping){
@@ -172,4 +221,29 @@ angular.module('eblaAppApp')
     $scope.deletePing = function(id){
       mainSvc.deletePing(id);
     };
+
+    $scope.addLike = function(item){
+      item.likes = item.likes + 1;
+      console.log(item.likes);
+      mainSvc.editItem(item);
+    };
+
+  $scope.open = function (_item) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'imageShow.html',
+      controller: 'ModalInstanceCtrl',
+      resolve: {
+        item: function () {
+          return _item;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
   });

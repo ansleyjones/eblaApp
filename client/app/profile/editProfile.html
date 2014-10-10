@@ -1,14 +1,14 @@
 <div ng-include="'font.html'"></div>
 
 <div class="container">
-<div class="col-md-12">
-<form ng-submit="addProfile(newProfile)">
-  <label for="firstName">First Name: </label><input type="text" ng-model="newProfile.firstName"><br>
-  <label for="lastName">Last Name: </label><input type="text" ng-model="newProfile.lastName"><br>
-  <label for="image">Profile Image URL: </label><input type="text" ng-model="newProfile.image"><br>
+  <h1>PLEASE FILL OUT EVERY FIELD</h1>
+<form ng-submit="editProfile(myProfile)">
+  <label for="firstName">First Name: </label><input type="text" placeholder="myProfile.firstName" ng-model="myProfile.firstName"><br>
+  <label for="lastName">Last Name: </label><input type="text" placeholder="myProfile.lastName" ng-model="myProfile.lastName"><br>
+  <label for="image">Profile Image URL: </label><input type="text" placeholder="myProfile.image" ng-model="myProfile.image"><br>
   <label for="location">Location: </label>
-  <input type="text" ng-model="newProfile.location.city" placeholder="City">
-  <select name="State" ng-model="newProfile.location.state">
+  <input type="text" ng-model="myProfile.location.city" placeholder="myProfile.location.city">
+  <select name="State" ng-model="myProfile.location.state">
     <option value="" selected="selected">Select a State</option>
     <option value="AL">Alabama</option>
     <option value="AK">Alaska</option>
@@ -63,13 +63,14 @@
     <option value="WY">Wyoming</option>
   </select>
   <br><br>
-  <label for="aboutMe">About Me: </label><textarea name="textarea" rows="10" cols="50" ng-model="newProfile.about"></textarea>
+  <label for="address">Street Address: </label><input type="text" placeholder="myProfile.address" ng-model="myProfile.address"><br>
+  <label for="zip">Zip Code: </label><input type="text" placeholder="myProfile.zip" ng-model="myProfile.zip"><br>
+  <label for="phone">Phone [(xxx)xxx-xxxx]: </label><input type="text" placeholder="myProfile.phone" ng-model="myProfile.phone"><br>
+  <label for="aboutMe">About Me: </label><textarea name="textarea" rows="10" cols="50" ng-model="myProfile.about"></textarea>
   <br><br>
   <label ng-repeat="trade in trades">
-    <input type="checkbox" checklist-model="trade" checklist-value="{{trade}}" ng-value="{{trade}}" ng-click="addTrade(trade)"> {{trade}} <br>
+    <input type="checkbox" checklist-model="trade" checklist-value="{{trade}}" ng-value="{{trade}}" ng-click="addTrade(trade)"> {{trade}}
   </label>
   <button type="submit">SUBMIT</button>
 </form>
-
-</div>
 </div>

@@ -2,40 +2,72 @@
 <div ng-include="'font.html'"></div>
 
 <div class="logo">
-  <img src="assets/images/blackFlag.png" style="width: 450px;" alt="">
+  <img src="assets/images/blackFlag.png" style="width: 70%;" alt="">
 </div>
 
 <div class="myHeader">
-<!--   <carousel interval="myInterval">
-  <slide ng-repeat="slide in slides" active="slide.active">
-    <img ng-src="{{slide.image}}" style="margin:auto;">
-    <div class="carousel-caption">
-      <h4>Slide {{\$index}}</h4>
-      <p>{{slide.text}}</p>
-    </div>
-  </slide>
-</carousel> -->
+
 </div>
 
-<div class="container">
+<div class="container main">
+
+  <div class="aboutEbla">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">How Ebla Works</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <i class="fa fa-tag tagIcon"></i>
+        <h2>TAG</h2>
+        <p>Create a profile, search artists, and tag work that you would like to trade.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fa fa-envelope-o reqIcon"></i>
+        <h2>REQUEST</h2>
+        <p>If you've been matched with another artist, you can create a trade request.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="fa fa-exchange tradeIcon"></i>
+        <h2>TRADE</h2>
+        <p>After a successful trade request, swap goods and enjoy your new artwork!</p>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Profiles:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="profile in profiles">
-        <li><a href="/profile/{{profile._id}}" tooltip="{{profile.firstName}}">{{profile.firstName}}<button type="button" class="close">&times;</button></a></li>
+    <div class="col-lg-12 searchBar">
+      <h1 class="page-header">Artists & Craftsmen</h1>
+      <ul>
+        <li><a href="" ng-click="search.trade = ''" id="allSearch">ALL</a></li>
+        <li><a href="" ng-click="search.trade = 'Painting/Drawing'"><img tooltip="Painters" src="assets/images/paint.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Printmaking'"><img tooltip="Printmakers" src="assets/images/print.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Woodwork'"><img tooltip="Woodworkers" src="assets/images/hammer.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Photography'"><img tooltip="Photographers" src="assets/images/cam.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Jewelry'"><img tooltip="Jewelry" src="assets/images/jewel.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Graphics'"><img tooltip="Graphic Artists" src="assets/images/graphics.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Textiles'"><img tooltip="Fiber Artists" src="assets/images/shirt.png" alt=""></a></li>
+        <li><a href="" ng-click="search.trade = 'Metalwork'"><img tooltip="Blacksmiths" src="assets/images/metal.png" alt=""></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row fixedRow">
+    <div class="col-lg-12 profs">
+      <ul class="col-md-4 col-lg-4 col-sm-6 profRepeat" ng-repeat="profile in profiles | filter : search : strict">
+        <li><a href="/profile/{{profile._id}}"><img src="{{profile.image}}" alt="" style="width: 200px; border-radius: 100%; height: 200px;"></a></li>
+        <li id="mainName">{{profile.firstName}} {{profile.lastName}}</li>
+        <li id="mainLoc"><i class="fa fa-map-marker"></i> {{profile.location.city}}, {{profile.location.state}}</li>
+
       </ul>
     </div>
   </div>
 
-  <h1 class="page-header">Items:</h1>
-  <div ng-repeat="item in items">
-    <h3><a href="/profile/{{item.profile._id}}">{{item.title}}</a></h3>
-  </div>
+
 
 </div>
 
-<footer class="footer">
-  <div class="container">
+<footer class="footer" style="height: 60px;">
 
-  </div>
 </footer>
